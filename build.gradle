@@ -1,3 +1,4 @@
+// Gradle Plugins DSL Standard
 plugins {
     id 'java'
     id 'jacoco'
@@ -17,13 +18,11 @@ version = projectVersion
 sourceCompatibility = projectSourceCompatibility
 targetCompatibility = projectTargetCompatibility
 bootJar { archiveFileName = "$archiveBaseName.$archiveExtension" }
-
 repositories { mavenCentral() }
 
 // Application dependencies
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    //implementation 'org.springframework.boot:spring-boot-dependencies'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'junit:junit:4.12'
     clover 'org.openclover:clover:4.4.1'
@@ -37,6 +36,7 @@ pmd { ignoreFailures = true; pmdTest.enabled=false }
 jacoco { toolVersion = "0.8.5" }
 jacocoTestReport { reports { xml.enabled true; csv.enabled true } }
 
+// Catch all Gradle task to run a complete clean build
 task cleanBuild {
     dependsOn 'clean'
     dependsOn 'test'
