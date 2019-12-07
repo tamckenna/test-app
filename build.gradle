@@ -1,18 +1,27 @@
-plugins {
-    id 'java'
-    id 'application'
+buildscript {
+    repositories { mavenCentral() }
+    dependencies { classpath("org.springframework.boot:spring-boot-gradle-plugin:2.2.1.RELEASE") }
 }
 
-repositories {
-    jcenter()
-}
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
+// Gradle Project Configurations
+configurations { developmentOnly; runtimeClasspath { extendsFrom developmentOnly } }
+group = projectGroup                                       
+version = projectVersion
+sourceCompatibility = projectSourceCompatibility
+targetCompatibility = projectTargetCompatibility
+
+repositories { mavenCentral() }
+
+// Application dependencies
 dependencies {
-    // Application dependencies
-    implementation 'com.google.guava:guava:28.0-jre'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    //implementation 'org.springframework.boot:spring-boot-dependencies'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'junit:junit:4.12'
-}
-
-application {
-    mainClassName = 'com.creoslate.poc.App'
 }
