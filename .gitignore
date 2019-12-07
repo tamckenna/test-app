@@ -1,13 +1,17 @@
-# Ignore Gradle project-specific cache directory
-.gradle/
+# Ignore Project Specific Directories
+bin/
 build/
 target/
-bin/
+.gradle/
 .idea/
 .settings/
+.vscode/
+
+# Ignore Project Specific Files
 .classpath
 .project
-.DS_Store
 *.log
-*.bak
 
+# Ignore OS Files & Misc
+.DS_Store
+*.bak
