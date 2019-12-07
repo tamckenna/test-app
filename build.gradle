@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'jacoco'
     id 'eclipse'
     id 'idea'
     id 'pmd'
@@ -15,7 +16,7 @@ group = projectGroup
 version = projectVersion
 sourceCompatibility = projectSourceCompatibility
 targetCompatibility = projectTargetCompatibility
-bootJar { archiveFileName = "$baseName.$extension" }
+bootJar { archiveFileName = "$archiveBaseName.$archiveExtension" }
 
 repositories { mavenCentral() }
 
@@ -33,3 +34,18 @@ clover { report { html = true }; testIncludes = ['**/*Test.java', '**/*Tests.jav
 spotbugs { ignoreFailures = true; spotbugsTest.enabled = false }
 tasks.withType(Pmd){ reports{ xml.enabled=true; html.enabled=true } }
 pmd { ignoreFailures = true; pmdTest.enabled=false }
+jacoco { toolVersion = "0.8.5" }
+jacocoTestReport { reports { xml.enabled true; csv.enabled true } }
+
+task cleanBuild {
+    dependsOn 'clean'
+    dependsOn 'test'
+    dependsOn 'check'
+    dependsOn 'jacocoTestReport'
+    dependsOn 'cloverGenerateReport'
+
+    tasks.findByName('test').mustRunAfter('clean')
+    tasks.findByName('check').mustRunAfter('test')
+    tasks.findByName('jacocoTestReport').mustRunAfter('check')
+    tasks.findByName('cloverGenerateReport').mustRunAfter('jacocoTestReport')
+}
